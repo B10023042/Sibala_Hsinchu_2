@@ -46,18 +46,18 @@ namespace Sibala_Hsinchu_2
 
 
             
-            return firstDice.Status - secondDice.Status;
+            return firstDice.DiceType - secondDice.DiceType;
         }
 
         private static bool IsBothDiceSameStatus(ISibara firstDice, ISibara secondDice)
         {
-            return firstDice.Status == secondDice.Status;
+            return firstDice.DiceType == secondDice.DiceType;
         }
 
         private bool IsBothDiceSameColor(ISibara firstDice, ISibara secondDice)
         {
-            return firstDice.Status == SibaraStatus.StatusEnum.SameColor &&
-                   secondDice.Status == SibaraStatus.StatusEnum.SameColor;
+            return firstDice.DiceType == SibaraStatus.DiceTypeEnum.SameColor &&
+                   secondDice.DiceType == SibaraStatus.DiceTypeEnum.SameColor;
         }
     }
 }

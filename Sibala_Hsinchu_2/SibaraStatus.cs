@@ -2,9 +2,9 @@
 {
     public class SibaraStatus
     {
-        public enum StatusEnum
+        public enum DiceTypeEnum
         {
-            NoPoint, Point, SameColor
+            NoPoint, NormalPoint, SameColor
         }
     }
 }

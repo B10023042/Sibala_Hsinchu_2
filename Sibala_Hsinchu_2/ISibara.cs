@@ -4,6 +4,6 @@
     {
         int Points { get; }
         int MaxPoint { get; }
-        SibaraStatus.StatusEnum Status { get; }
+        SibaraStatus.DiceTypeEnum DiceType { get; }
     }
 }

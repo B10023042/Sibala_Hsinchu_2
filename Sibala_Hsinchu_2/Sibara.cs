@@ -19,9 +19,9 @@ namespace Sibala_Hsinchu_2
         public int Points { get; protected set; }
         public int MaxPoint { get; protected set; }
 
-        public SibaraStatus.StatusEnum Status { get; protected set; }
+        public SibaraStatus.DiceTypeEnum DiceType { get; protected set; }
 
-        public string SibaraResult { get; protected set; }
+        public string Output { get; protected set; }
 
         protected  virtual void Compute()
         {
@@ -30,12 +30,12 @@ namespace Sibala_Hsinchu_2
             if (distinctCount == 1)
             {
                 this.Points = _nums.Sum()/2;
-                this.Status = SibaraStatus.StatusEnum.SameColor;
+                this.DiceType = SibaraStatus.DiceTypeEnum.SameColor;
                 this.MaxPoint = _nums.First();
             }else if (distinctCount == 4)
             {
                 Points = 0;
-                Status = SibaraStatus.StatusEnum.NoPoint;
+                DiceType = SibaraStatus.DiceTypeEnum.NoPoint;
                 this.MaxPoint = _nums.First();
             }
             else if (distinctCount == 2)
@@ -44,12 +44,12 @@ namespace Sibala_Hsinchu_2
                 if (count == 3)
                 {
                     Points = 0;
-                    Status = SibaraStatus.StatusEnum.NoPoint;
+                    DiceType = SibaraStatus.DiceTypeEnum.NoPoint;
                 }
                 else
                 {
                     Points = _nums.Take(2).Sum();
-                    Status = SibaraStatus.StatusEnum.Point;
+                    DiceType = SibaraStatus.DiceTypeEnum.NormalPoint;
                 }
 
                 this.MaxPoint = _nums.Max();
@@ -58,7 +58,7 @@ namespace Sibala_Hsinchu_2
             else
             {
                 Points = _nums.GroupBy(x => x).Where(x => x.Count() == 1).Sum(x => x.Key);
-                Status = SibaraStatus.StatusEnum.Point;
+                DiceType = SibaraStatus.DiceTypeEnum.NormalPoint;
                 this.MaxPoint = _nums.GroupBy(x => x).Where(x => x.Count() == 1).Max(x => x.Key);
 
                 
@@ -69,20 +69,20 @@ namespace Sibala_Hsinchu_2
 
         private void SetSibaraResult()
         {
-            if (Status == SibaraStatus.StatusEnum.SameColor)
-                this.SibaraResult = "same color";
-            else if (Status == SibaraStatus.StatusEnum.NoPoint)
-                this.SibaraResult = "no points";
-            else if (Status == SibaraStatus.StatusEnum.Point)
+            if (DiceType == SibaraStatus.DiceTypeEnum.SameColor)
+                this.Output = "same color";
+            else if (DiceType == SibaraStatus.DiceTypeEnum.NoPoint)
+                this.Output = "no point";
+            else if (DiceType == SibaraStatus.DiceTypeEnum.NormalPoint)
             {
                 if (Points == 12)
-                    this.SibaraResult = "sibala";
+                    this.Output = "sibala";
                 else if(Points == 3)
                 {
-                    this.SibaraResult = "BG";
+                    this.Output = "BG";
                 }
                 else
-                    this.SibaraResult = $"{Points} point";
+                    this.Output = $"{Points} point";
             }
         }
 
