@@ -13,7 +13,7 @@ namespace Sibala_Hsinchu_2
             _sibara = new Sibara(1, 1, 1, 1);
             OutputShouldBe("same color");
             PointsShouldBe(0);
-            MaxPointShouldBe(4);
+            MaxPointShouldBe(1);
             DiceTypeShouldBe(SibaraStatus.DiceTypeEnum.SameColor);
         }
 

@@ -67,12 +67,16 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Test\SibaraOutputTests.cs" />
+    <Compile Include="IDiceHandler.cs" />
+    <Compile Include="NoPointHandler.cs" />
+    <Compile Include="NormalPointHandler.cs" />
+    <Compile Include="SameColorHandler.cs" />
+    <Compile Include="Test\DiceComparerTest.cs" />
+    <Compile Include="Test\SibaraTests.cs" />
     <Compile Include="DiceComparer.cs" />
     <Compile Include="SibaraStatus.cs" />
     <Compile Include="ISibara.cs" />
     <Compile Include="Sibara.cs" />
-    <Compile Include="Test\DiceComparerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

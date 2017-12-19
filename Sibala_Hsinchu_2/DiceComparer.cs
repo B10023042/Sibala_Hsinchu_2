@@ -8,56 +8,62 @@ namespace Sibala_Hsinchu_2
 {
     class DiceComparer : IComparer<ISibara>
     {
-        private Dictionary<int, int> dict;
+        private Dictionary<int, int> sameColorCompareWeightLookup;
 
         public DiceComparer()
         {
-            dict = new Dictionary<int, int>()
+            sameColorCompareWeightLookup = new Dictionary<int, int>()
             {
-                [0] = 4,
-                [1] = 6,
-                [2] = 10,
-                [3] = 12,
-                [4] = 8,
-                [5] = 2,
+                {4,1},
+                { 6,2},
+                { 10,3},
+                { 12,4},
+                { 8,5},
+                { 2,6}
 
             };
         }
-        
+
         public int Compare(ISibara firstDice, ISibara secondDice)
         {
 
-            if (IsBothDiceSameColor(firstDice, secondDice))
+            if (IsSameDiceType(firstDice, secondDice))
             {
-                return
-                    dict.First(x => x.Value == firstDice.Points).Key -
-                    dict.First(x => x.Value == secondDice.Points).Key;
-            }
-
-            if (IsBothDiceSameStatus(firstDice, secondDice))
-            {
-                if (firstDice.Points == secondDice.Points)
+                var compareLookup = new Dictionary<SibaraStatus.DiceTypeEnum, Func<ISibara, ISibara, int>>
                 {
-                    return firstDice.MaxPoint - secondDice.MaxPoint;
-                }
-                return firstDice.Points - secondDice.Points;
+
+                    {SibaraStatus.DiceTypeEnum.NoPoint,GetResultWhenNoPoint },
+                    {SibaraStatus.DiceTypeEnum.SameColor,GetResultWhenSameColor },
+                    {SibaraStatus.DiceTypeEnum.NormalPoint,GetResultWhenNormalPoint },
+                };
+                return compareLookup[firstDice.DiceType].Invoke(firstDice, secondDice);
+
             }
 
 
-
-            
             return firstDice.DiceType - secondDice.DiceType;
         }
 
-        private static bool IsBothDiceSameStatus(ISibara firstDice, ISibara secondDice)
+        private static bool IsSameDiceType(ISibara firstDice, ISibara secondDice)
         {
             return firstDice.DiceType == secondDice.DiceType;
         }
 
-        private bool IsBothDiceSameColor(ISibara firstDice, ISibara secondDice)
+        private static int GetResultWhenNormalPoint(ISibara firstDice, ISibara secondDice)
         {
-            return firstDice.DiceType == SibaraStatus.DiceTypeEnum.SameColor &&
-                   secondDice.DiceType == SibaraStatus.DiceTypeEnum.SameColor;
+            return firstDice.MaxPoint - secondDice.MaxPoint;
         }
+
+        private int GetResultWhenSameColor(ISibara firstDice, ISibara secondDice)
+        {
+            return sameColorCompareWeightLookup[firstDice.MaxPoint]
+                   - sameColorCompareWeightLookup[secondDice.MaxPoint];
+        }
+
+        private static int GetResultWhenNoPoint(ISibara firstDice, ISibara secondDice)
+        {
+            return 0;
+        }
+
     }
 }
